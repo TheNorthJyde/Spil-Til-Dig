@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  spil-til-dig.backend:
+    image: ${DOCKER_REGISTRY-}spiltildigbackend
+    build:
+      context: .
+      dockerfile: Spil-Til-Dig.Backend/Dockerfile
