@@ -1,4 +1,5 @@
-﻿using Spil_Til_Dig.Backend.Database;
+﻿using Microsoft.EntityFrameworkCore;
+using Spil_Til_Dig.Backend.Database;
 using Spil_Til_Dig.Shared.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,11 @@ namespace Spil_Til_Dig.Backend.Repos
     {
         public ProductRepo(DatabaseContext context) : base(context)
         {
+        }
+
+        public override IQueryable<Product> GetAll()
+        {
+            return base.GetAll().Include(g => g.Genres);
         }
     }
 }

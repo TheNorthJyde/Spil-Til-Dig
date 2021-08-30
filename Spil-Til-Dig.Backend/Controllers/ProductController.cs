@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Spil_Til_Dig.Backend.Attributes;
 using Spil_Til_Dig.Backend.Services;
 using Spil_Til_Dig.Shared.Entities;
+using Spil_Til_Dig.Shared.Models;
+using Spil_Til_Dig.Shared.Models.DTO;
+using Spil_Til_Dig.Shared.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,17 +20,26 @@ namespace Spil_Til_Dig.Backend.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService productService;
-
-        public ProductController(IProductService productService)
+        protected readonly IMapper mapper;
+        public ProductController(IProductService productService, IMapper mapper)
         {
             this.productService = productService;
+            this.mapper = mapper;
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> GetProducts()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+        [HttpGet]
+        public async Task<IActionResult> GetProducts([FromQuery] Pagination pagination)
+        {
+            if (pagination == null)
+            {
+                pagination = new Pagination();
+            }
+            
+            var list = await productService.GetPagedProducts(pagination);
+            var dest = mapper.Map<PagedList<Product>, PagedList<ProductDTO>>(list);
+            dest.Paging = list.Paging;
+            return Ok(dest);
+        }
 
         //[HttpGet("{id}")]
         //public async Task GetProduct(int id)

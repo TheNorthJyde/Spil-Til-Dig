@@ -21,6 +21,11 @@ namespace Spil_Til_Dig.Backend.Controllers
             this.genreSerivce = genreSerivce;
         }
 
+        public async Task<IActionResult> GetGenre()
+        {
+            return Ok(await genreSerivce.GetAllGernres());
+        }
+
         [HttpPost]
         [ApiKey]
         public async Task<IActionResult> CreateProducts([FromBody] List<Genre> products)

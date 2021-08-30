@@ -68,7 +68,7 @@ namespace Spil_Til_Dig.Backend
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Spil_Til_Dig.Backend", Version = "v1" });
             });
-
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
         }
 

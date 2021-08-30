@@ -8,13 +8,52 @@ namespace Spil_Til_Dig.Shared.Models
 {
     public class Pagination
     {
-        public string Search { get; set; }
         public int PageSize { get; set; } = 12;
-        public int currentPage { get; set; } = 1;
+        public int CurrentPage { get; set; } = 1;
 
-        public int MaxPrice { get; set; }
+        public string Search { get; set; }
+        public long? GenreId { get; set; }
+        public int? MaxPrice { get; set; }
+        public bool IsOnSale { get; set; }
 
         public int TotalCount { get; set; }
         public int TotalPages { get; set; }
+
+        public string AsQuery()
+        {
+            string query = "?";
+            if (PageSize > 0)
+            {
+                query += "pageSize=" + PageSize + "&";
+            }
+            if (CurrentPage > 0)
+            {
+                query += "currentPage=" + CurrentPage + "&";
+            }
+            if (!string.IsNullOrEmpty(Search))
+            {
+                query += "GenreIds=" + Search + "&";
+            }
+            if (GenreId.HasValue)
+            {
+                query += "GenreId=" + GenreId.Value + "&";
+            }
+            if (IsOnSale)
+            {
+                query += "IsOnSale=" + IsOnSale;
+            }
+            return query;
+        }
+
+        public void PreparePaging()
+        {
+            if (!string.IsNullOrWhiteSpace(Search))
+            {
+                Search = Search.ToLower().Trim();
+            }
+            CurrentPage = CurrentPage != 0 ? CurrentPage : 1;
+            PageSize = PageSize < 100 ? PageSize : 100;
+            PageSize = PageSize >= 0 ? PageSize : 12;
+        }
     }
 }
