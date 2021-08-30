@@ -1,4 +1,5 @@
-﻿using Spil_Til_Dig.Backend.Repos;
+﻿using Microsoft.EntityFrameworkCore;
+using Spil_Til_Dig.Backend.Repos;
 using Spil_Til_Dig.Shared.Entities;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,11 @@ namespace Spil_Til_Dig.Backend.Services
                 genreRepo.Remove(genre);
             }
             await genreRepo.SaveAsync();
+        }
+
+        public async Task<List<Genre>> GetAllGernres()
+        {
+            return await genreRepo.GetAll().ToListAsync();
         }
     }
 }

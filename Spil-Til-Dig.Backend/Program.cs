@@ -24,7 +24,7 @@ namespace Spil_Til_Dig.Backend
                 {
                     var context = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
 
-                    await context.Database.EnsureDeletedAsync();
+                    //await context.Database.EnsureDeletedAsync();
 
                     var pendingMigrations = await context.Database.GetPendingMigrationsAsync();
                     if (pendingMigrations.Any())
@@ -39,7 +39,6 @@ namespace Spil_Til_Dig.Backend
                         await Seed.Seed100Games();
                     }
                 }
-
             }
             catch (Exception)
             {

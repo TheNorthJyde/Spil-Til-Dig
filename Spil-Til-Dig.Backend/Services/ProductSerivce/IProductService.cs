@@ -1,4 +1,6 @@
 ﻿using Spil_Til_Dig.Shared.Entities;
+using Spil_Til_Dig.Shared.Models;
+using Spil_Til_Dig.Shared.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +13,6 @@ namespace Spil_Til_Dig.Backend.Services
         Task AddProductsFromCMS(List<Product> products);
         Task UpdateProductFromCMS(Product product);
         Task DeleteProductFromCMS(long id);
+        Task<PagedList<Product>> GetPagedProducts(Pagination pagination);
     }
 }
