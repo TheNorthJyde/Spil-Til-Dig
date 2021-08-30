@@ -41,11 +41,11 @@ namespace Spil_Til_Dig.Backend.Controllers
             return Ok(dest);
         }
 
-        //[HttpGet("{id}")]
-        //public async Task GetProduct(int id)
-        //{
-        //    return "value";
-        //}
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetProduct(long id)
+        {
+            return Ok(mapper.Map<ProductDTO>(await productService.GetProduct(id)));
+        }
 
         [HttpPost]
         [ApiKey]
