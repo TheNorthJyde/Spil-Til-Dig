@@ -1,8 +1,27 @@
 version: '3.4'
 
+networks:
+  spilnet:
+    driver: bridge
 services:
   spil-til-dig.backend:
     image: ${DOCKER_REGISTRY-}spiltildigbackend
     build:
       context: .
       dockerfile: Spil-Til-Dig.Backend/Dockerfile
+    depends_on:
+       - "MSSQL"
+    networks:
+        - spilnet
+  MSSQL:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    ports:
+        - "1433:1433" 
+    environment:
+        - ACCEPT_EULA=Y
+        - SA_PASSWORD=K0d30rd1!
+        - MSSQL_PID=Express
+    networks:
+        - spilnet
+    container_name: mssql
+    
