@@ -18,5 +18,10 @@ namespace Spil_Til_Dig.Backend.Repos
         {
             return base.GetAll().Include(g => g.Genres);
         }
+
+        public override async Task<Product> GetAsync(long Id)
+        {
+            return await _context.Products.Include(g => g.Genres).Include(k => k.Keys.Where(x => !x.IsSold)).FirstOrDefaultAsync(x => x.Id == Id);
+        }
     }
 }

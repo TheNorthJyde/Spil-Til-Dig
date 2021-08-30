@@ -61,6 +61,11 @@ namespace Spil_Til_Dig.Backend.Services
             return PagedList<Product>.CreateAsync(source, pagination);
         }
 
+        public async Task<Product> GetProduct(long id)
+        {
+            return await productRepo.GetAsync(id);
+        }
+
         public async Task UpdateProductFromCMS(Product product)
         {
             productRepo.Update(product);

@@ -14,5 +14,6 @@ namespace Spil_Til_Dig.Backend.Services
         Task UpdateProductFromCMS(Product product);
         Task DeleteProductFromCMS(long id);
         Task<PagedList<Product>> GetPagedProducts(Pagination pagination);
+        Task<Product> GetProduct(long id);
     }
 }
