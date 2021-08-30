@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Spil_Til_Dig.Backend.Attributes;
 using Spil_Til_Dig.Backend.Services;
 using Spil_Til_Dig.Shared.Entities;
 using System;
@@ -21,6 +22,7 @@ namespace Spil_Til_Dig.Backend.Controllers
         }
 
         [HttpPost]
+        [ApiKey]
         public async Task<IActionResult> CreateProducts([FromBody] List<Genre> products)
         {
             await genreSerivce.AddGenreFromCMS(products);
@@ -28,6 +30,7 @@ namespace Spil_Til_Dig.Backend.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ApiKey]
         public async Task<IActionResult> DeleteGenre(long id)
         {
             await genreSerivce.DeleteGenreFromCMS(id);

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Spil_Til_Dig.Backend.Attributes;
 using Spil_Til_Dig.Backend.Services;
 using Spil_Til_Dig.Shared.Entities;
 using System;
@@ -34,6 +35,7 @@ namespace Spil_Til_Dig.Backend.Controllers
         //}
 
         [HttpPost]
+        [ApiKey]
         public async Task<IActionResult> CreateProducts([FromBody] List<Product> products)
         {
             await productService.AddProductsFromCMS(products);
@@ -41,6 +43,7 @@ namespace Spil_Til_Dig.Backend.Controllers
         }
 
         [HttpPut("{id}")]
+        [ApiKey]
         public async Task<IActionResult> UpdateProduct(long id, [FromBody] Product product)
         {
             if (id == product.Id)
@@ -55,6 +58,7 @@ namespace Spil_Til_Dig.Backend.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ApiKey]
         public async Task<IActionResult> DeleteProduct(long id)
         {
             await productService.DeleteProductFromCMS(id);
