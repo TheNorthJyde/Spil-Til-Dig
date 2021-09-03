@@ -17,11 +17,14 @@ namespace Spil_Til_Dig.Backend.Installers
             #region Repos
             services.AddScoped<IProductRepo, ProductRepo>();
             services.AddScoped<IGenreRepo, GenreRepo>();
+            services.AddScoped<IOrderRepo, OrderRepo>();
+            services.AddScoped<IKeyRepo, KeyRepo>();
             #endregion
 
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IGenreSerivce, GenreService>();
-
+            services.AddScoped<IPayPalService, PayPalService>();
+            services.AddScoped<IUserService, UserService>();
 #if DEBUG
             services.AddScoped<ISeedService, SeedService>();
 #endif

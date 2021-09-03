@@ -11,6 +11,8 @@ namespace Spil_Til_Dig.Shared.Entities
     public class ProduktKey : BaseEntity<string>
     {
         public bool IsSold { get; set; }
+        public long? ProductId { get; set; }
+        public Product Product { get; set; }
         public ProduktKey()
         {
 

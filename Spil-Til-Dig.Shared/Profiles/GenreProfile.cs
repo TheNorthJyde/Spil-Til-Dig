@@ -13,7 +13,7 @@ namespace Spil_Til_Dig.Shared.Profiles
     {
         public GenreProfile()
         {
-            CreateMap<Genre, GenreDTO>();
+            CreateMap<Genre, GenreDTO>().ReverseMap();
         }
     }
 }
