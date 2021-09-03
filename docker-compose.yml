@@ -25,3 +25,10 @@ services:
         - spilnet
     container_name: mssql
     
+
+  spil-til-dig.web:
+    image: ${DOCKER_REGISTRY-}spiltildigweb
+    build:
+      context: .
+      dockerfile: ../Spil-Til-Dig.Web/Dockerfile
+
