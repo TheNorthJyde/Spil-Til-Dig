@@ -13,6 +13,7 @@ services:
        - "MSSQL"
     networks:
         - spilnet
+    container_name: backend
   MSSQL:
     image: mcr.microsoft.com/mssql/server:2017-latest
     ports:
@@ -24,11 +25,13 @@ services:
     networks:
         - spilnet
     container_name: mssql
-    
-
   spil-til-dig.web:
     image: ${DOCKER_REGISTRY-}spiltildigweb
     build:
       context: .
-      dockerfile: ../Spil-Til-Dig.Web/Dockerfile
-
+      dockerfile: Spil-Til-Dig.Web/Dockerfile
+    networks:
+        - spilnet
+    container_name: frontend
+    #depends_on:
+    #   - "spil-til-dig.backend"

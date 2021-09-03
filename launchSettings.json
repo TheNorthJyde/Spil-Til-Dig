@@ -1,0 +1,37 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "serviceActions": {
+        "MSSQL": "StartWithoutDebugging",
+        "spil-til-dig.backend": "StartDebugging",
+        "spil-til-dig.web": "StartDebugging"
+      },
+      "commandVersion": "1.0"
+    },
+    "Docker Web": {
+      "commandName": "DockerCompose",
+      "composeLaunchServiceName": "spil-til-dig.web",
+      "serviceActions": {
+        "MSSQL": "StartWithoutDebugging",
+        "spil-til-dig.backend": "StartDebugging",
+        "spil-til-dig.web": "StartDebugging"
+      },
+      "composeLaunchAction": "LaunchBrowser",
+      "commandVersion": "1.0",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}"
+    },
+    "only web": {
+      "commandName": "DockerCompose",
+      "composeLaunchServiceName": "spil-til-dig.web",
+      "serviceActions": {
+        "MSSQL": "DoNotStart",
+        "spil-til-dig.backend": "DoNotStart",
+        "spil-til-dig.web": "StartDebugging"
+      },
+      "composeLaunchAction": "LaunchBrowser",
+      "commandVersion": "1.0",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}"
+    }
+  }
+}

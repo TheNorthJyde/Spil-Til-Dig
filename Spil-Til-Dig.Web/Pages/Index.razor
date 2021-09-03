@@ -1,0 +1,23 @@
+﻿@page "/"
+
+<AuthorizeView>
+    <Authorized>
+
+        <h3>ClaimsPrincipal Data</h3>
+
+        <button @onclick="GetClaimsPrincipalData">Get ClaimsPrincipal Data</button>
+
+        <p>@_authMessage</p>
+
+        @if (_claims.Count() > 0)
+        {
+            <ul>
+                @foreach (var claim in _claims)
+                {
+                    <li>@claim.Type: @claim.Value</li>
+                }
+            </ul>
+        }
+    </Authorized>
+</AuthorizeView>
+
