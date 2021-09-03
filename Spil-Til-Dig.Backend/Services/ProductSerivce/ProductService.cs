@@ -36,7 +36,7 @@ namespace Spil_Til_Dig.Backend.Services
             await productRepo.SaveAsync();
         }
 
-        public Task<PagedList<Product>> GetPagedProducts(Pagination pagination)
+        public async Task<PagedList<Product>> GetPagedProducts(Pagination pagination)
         {
             pagination.PreparePaging();
             var source = productRepo.GetAll();
@@ -58,7 +58,7 @@ namespace Spil_Til_Dig.Backend.Services
                 source = source.Where(x => x.IsOnSale);
             }
 
-            return PagedList<Product>.CreateAsync(source, pagination);
+            return await PagedList<Product>.CreateAsync(source, pagination);
         }
 
         public async Task<Product> GetProduct(long id)

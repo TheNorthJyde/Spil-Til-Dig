@@ -21,6 +21,7 @@ namespace Spil_Til_Dig.Backend.Controllers
             this.genreSerivce = genreSerivce;
         }
 
+        [HttpGet]
         public async Task<IActionResult> GetGenre()
         {
             return Ok(await genreSerivce.GetAllGernres());
@@ -28,7 +29,7 @@ namespace Spil_Til_Dig.Backend.Controllers
 
         [HttpPost]
         [ApiKey]
-        public async Task<IActionResult> CreateProducts([FromBody] List<Genre> products)
+        public async Task<IActionResult> CreateGenre([FromBody] List<Genre> products)
         {
             await genreSerivce.AddGenreFromCMS(products);
             return Ok();

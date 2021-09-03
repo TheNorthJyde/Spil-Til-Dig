@@ -14,9 +14,11 @@ using Microsoft.OpenApi.Models;
 using Spil_Til_Dig.Backend.Database;
 using Spil_Til_Dig.Backend.Installers;
 using Spil_Til_Dig.Backend.Options;
+using Spil_Til_Dig.Backend.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Spil_Til_Dig.Backend
@@ -46,12 +48,12 @@ namespace Spil_Til_Dig.Backend
 
             services.Configure<IGDBOptions>(Configuration.GetSection("IGDB"));
 #endif
-
+            services.Configure<PayPalOptions>(Configuration.GetSection("PayPal"));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
 
-           
+            services.AddHttpClient<IPayPalService, PayPalService>(x => x.BaseAddress = new Uri("https://api-m.sandbox.paypal.com/"));
 
             services.AddDbContext<DatabaseContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -64,11 +66,12 @@ namespace Spil_Til_Dig.Backend
             services.InstallServicesInAssembly(Configuration);
 
             services.AddControllers();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Spil_Til_Dig.Backend", Version = "v1" });
             });
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            
 
         }
 
@@ -77,13 +80,11 @@ namespace Spil_Til_Dig.Backend
         {
             if (env.IsDevelopment())
             {
+                app.UseCors();
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Spil_Til_Dig.Backend v1"));
             }
-#if DEBUG
-            app.UseCors();
-#endif
 
             app.UseHttpsRedirection();
 

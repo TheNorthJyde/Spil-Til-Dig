@@ -14,7 +14,8 @@ namespace Spil_Til_Dig.Shared.Profiles
     {
         public ProductProfile()
         {
-            CreateMap<Product, ProductDTO>().ForMember(d => d.KeyCount, s => s.MapFrom(k => k.Keys.Count));
+            CreateMap<Product, ProductDTO>().ForMember(d => d.KeyCount, s => s.MapFrom(k => k.Keys.Count)).ReverseMap();
+            CreateMap<ProduktKey, ProductKeyDTO>().ReverseMap();
             //CreateMap(typeof(PagedList<>), typeof(PagedList<>));
             //CreateMap<PagedList<Product>, PagedList<ProductDTO>>();
             //CreateMap<List<Product>, List<ProductDTO>>();
