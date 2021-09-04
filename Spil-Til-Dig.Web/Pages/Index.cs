@@ -1,38 +1,44 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
+﻿using MatBlazor;
+using Microsoft.AspNetCore.Components;
+using Spil_Til_Dig.Shared.Models;
+using Spil_Til_Dig.Shared.Models.DTO;
+using Spil_Til_Dig.Shared.Wrappers;
+using Spil_Til_Dig.Web.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Spil_Til_Dig.Web.Pages
 {
     public partial class Index
     {
-        private string _authMessage;
-        private string _surnameMessage;
-        private IEnumerable<Claim> _claims = Enumerable.Empty<Claim>();
+        [Inject]
+        IProductService productService { get; set; }
 
         [Inject]
-        AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+        NavigationManager navigation { get; set; }
 
-        private async Task GetClaimsPrincipalData()
+        PagedList<ProductDTO> Products;
+
+        protected override async Task OnInitializedAsync()
         {
-            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            var user = authState.User;
+            var pagination = new Pagination(60);
+            Products = await productService.GetProducts(pagination);
+        }
 
-            if (user.Identity.IsAuthenticated)
-            {
-                _authMessage = $"{user.Identity.Name} is authenticated.";
-                _claims = user.Claims;
-                _surnameMessage =
-                    $"Surname: {user.FindFirst(c => c.Type == ClaimTypes.Surname)?.Value}";
-            }
-            else
-            {
-                _authMessage = "The user is NOT authenticated.";
-            }
+        async Task reloadProducts()
+        {
+            Products = await productService.GetProducts(Products.Paging);
+            StateHasChanged();
+            navigation.NavigateTo(navigation.BaseUri);
+        }
+
+
+        async Task OnPage(MatPaginatorPageEvent e)
+        {
+            Products.Paging.CurrentPage = e.PageIndex + 1;
+            await reloadProducts();
         }
     }
 }

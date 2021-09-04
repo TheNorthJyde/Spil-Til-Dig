@@ -8,7 +8,7 @@ namespace Spil_Til_Dig.Shared.Models
 {
     public class Pagination
     {
-        public int PageSize { get; set; } = 12;
+        public int PageSize { get; set; } = 20;
         public int CurrentPage { get; set; } = 1;
 
         public string Search { get; set; }
@@ -54,6 +54,15 @@ namespace Spil_Til_Dig.Shared.Models
             CurrentPage = CurrentPage != 0 ? CurrentPage : 1;
             PageSize = PageSize < 100 ? PageSize : 100;
             PageSize = PageSize >= 0 ? PageSize : 12;
+        }
+
+        public Pagination()
+        {
+
+        }
+        public Pagination(int pageSize)
+        {
+            this.PageSize = pageSize;
         }
     }
 }
