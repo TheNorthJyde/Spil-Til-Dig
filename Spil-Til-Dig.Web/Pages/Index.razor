@@ -1,23 +1,32 @@
 ﻿@page "/"
 
-<AuthorizeView>
-    <Authorized>
+@if (Products != null)
+{
 
-        <h3>ClaimsPrincipal Data</h3>
+    <div class="container">
+        <div class="row">
+            @foreach (var product in Products)
+            {
+                <div class="col-sm-5" style="width: 225px; max-width: 225px">
+                    <div class="GameCard">
+                        <div class="Game_cover">
+                            <img class="img-responsive " src="@product.ImageUrl" >
+                        </div>
+                        <div class="GameCard-Caption">
+                            <div class="GameCard-Aside">Køb</div>
+                            <p class="GameCard-Name">@product.Name</p>
+                            <small class="GameCard-Price">@(product.IsOnSale? product.SalePrice : product.Price) kr.</small>
+                        </div>
+                    </div>
 
-        <button @onclick="GetClaimsPrincipalData">Get ClaimsPrincipal Data</button>
+                </div>
+            }
 
-        <p>@_authMessage</p>
+        </div>
+        <Paginator Length="Products.Paging.TotalCount" PageSize="Products.Paging.PageSize" Page="OnPage" PageLabel="Side:"></Paginator>
+    </div>
+}
+<style>
+    
 
-        @if (_claims.Count() > 0)
-        {
-            <ul>
-                @foreach (var claim in _claims)
-                {
-                    <li>@claim.Type: @claim.Value</li>
-                }
-            </ul>
-        }
-    </Authorized>
-</AuthorizeView>
-
+</style>

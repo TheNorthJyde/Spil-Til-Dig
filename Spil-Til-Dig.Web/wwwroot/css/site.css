@@ -48,3 +48,78 @@ a, .btn-link {
         right: 0.75rem;
         top: 0.5rem;
     }
+
+.col-sm-5 {
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.GameCard {
+    display: block;
+    position: relative;
+    overflow: hidden;
+}
+
+
+.GameCard-Name {
+    font-weight: 600;
+    margin-bottom: 2px;
+    margin-top: 2px;
+    width: 75%;
+}
+
+.GameCard-Price {
+    display: block;
+    width: 75%;
+    color: #bfbfbf;
+    font-size: 85%;
+}
+
+.GameCard-Price, .GameCard-Name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.GameCard-Caption {
+    position: relative;
+    border: 1px solid #ECECEC;
+    background: white;
+    padding: 2px 10px 7px 10px;
+    font-size: 14px;
+    color: #555555;
+    z-index: 1;
+    min-height: 50px;
+}
+
+.GameCard-Aside {
+    position: absolute;
+    bottom: 15px;
+    right: 8px;
+    font-size: 14px;
+}
+
+.Game_cover {
+    height: 0;
+    padding-bottom: 133.33333333%;
+    position: relative;
+}
+
+    .Game_cover > img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        object-fit: cover;
+    }
+
+img {
+    border: 0;
+    vertical-align: middle;
+}
+
+.img-responsive {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}

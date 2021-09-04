@@ -11,12 +11,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
-using Spil_Til_Dig.Web.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
+using System.Net.Http;
+using Spil_Til_Dig.Web.Helpers;
 
 namespace Spil_Til_Dig.Web
 {
@@ -34,18 +36,18 @@ namespace Spil_Til_Dig.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
-                .AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAd"));
+                .AddMicrosoftIdentityWebApp(options => 
+                {
+                    Configuration.Bind("AzureAD", options);
+                    //options.SaveTokens = true;
+                    //options.Scope.Add("offline_access");
+                });
 
+            services.AddHttpClient("SpilTilDig.API", client =>
+                client.BaseAddress = new Uri("http://backend/api/"));
 
-            //services.AddHttpClient("SpilTilDig.API", client =>
-            //    client.BaseAddress = new Uri("https://localhost:5002"))
-            //    .AddHttpMessageHandler(sp =>
-            //    {
-            //        var handler = sp.GetService<mess>()
-            //           .ConfigureHandler(
-            //               authorizedUrls: new[] { "https://localhost:5002" });
-            //        return handler;
-            //    });
+            services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
+                .CreateClient("SpilTilDig.API"));
 
             services.AddControllersWithViews()
                 .AddMicrosoftIdentityUI();
@@ -53,7 +55,8 @@ namespace Spil_Til_Dig.Web
             services.AddRazorPages();
             services.AddServerSideBlazor()
                 .AddMicrosoftIdentityConsentHandler();
-            services.AddSingleton<WeatherForecastService>();
+
+            services.InstallServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
