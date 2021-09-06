@@ -12,8 +12,8 @@ namespace Spil_Til_Dig.Shared.Models
         public int CurrentPage { get; set; } = 1;
 
         public string Search { get; set; }
-        public long? GenreId { get; set; }
-        public int? MaxPrice { get; set; }
+        public long GenreId { get; set; }
+        public int MaxPrice { get; set; }
         public bool IsOnSale { get; set; }
 
         public int TotalCount { get; set; }
@@ -32,11 +32,15 @@ namespace Spil_Til_Dig.Shared.Models
             }
             if (!string.IsNullOrEmpty(Search))
             {
-                query += "GenreIds=" + Search + "&";
+                query += "Search=" + Search + "&";
             }
-            if (GenreId.HasValue)
+            if (GenreId != 0)
             {
-                query += "GenreId=" + GenreId.Value + "&";
+                query += "GenreId=" + GenreId + "&";
+            }
+            if (MaxPrice != 0)
+            {
+                query += "MaxPrice=" + MaxPrice + "&";
             }
             if (IsOnSale)
             {

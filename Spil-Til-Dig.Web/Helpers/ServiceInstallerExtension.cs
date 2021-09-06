@@ -12,6 +12,8 @@ namespace Spil_Til_Dig.Web.Helpers
         public static IServiceCollection InstallServices(this IServiceCollection services)
         {
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IGenreService, GenreService>();
+
             return services;
         }
     }

@@ -14,22 +14,27 @@ namespace Spil_Til_Dig.Web.Pages
     public partial class Index
     {
         [Inject]
-        IProductService productService { get; set; }
+        IProductService ProductService { get; set; }
+        [Inject]
+        IGenreService GenreService { get; set; }
 
         [Inject]
         NavigationManager navigation { get; set; }
 
         PagedList<ProductDTO> Products;
 
+        List<GenreDTO> Genres;
+
         protected override async Task OnInitializedAsync()
         {
-            var pagination = new Pagination(60);
-            Products = await productService.GetProducts(pagination);
+            var pagination = new Pagination(40);
+            Genres = await GenreService.GetAllGenres();
+            Products = await ProductService.GetProducts(pagination);
         }
 
         async Task reloadProducts()
         {
-            Products = await productService.GetProducts(Products.Paging);
+            Products = await ProductService.GetProducts(Products.Paging);
             StateHasChanged();
             navigation.NavigateTo(navigation.BaseUri);
         }
@@ -39,6 +44,14 @@ namespace Spil_Til_Dig.Web.Pages
         {
             Products.Paging.CurrentPage = e.PageIndex + 1;
             await reloadProducts();
+        }
+
+        void ResetFilter()
+        {
+            Products.Paging.Search = null;
+            Products.Paging.MaxPrice = 0;
+            Products.Paging.IsOnSale = false;
+            Products.Paging.GenreId = 0;
         }
     }
 }

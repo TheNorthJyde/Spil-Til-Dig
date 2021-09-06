@@ -43,15 +43,15 @@ namespace Spil_Til_Dig.Backend.Services
             source = source.Include(k => k.Keys.Where(x => x.IsSold == false));
             if (!string.IsNullOrWhiteSpace(pagination.Search))
             {
-                source = source.Where(x => x.Name.Contains(pagination.Search));
+                source = source.Where(x => x.Name.ToLower().Contains(pagination.Search));
             }
-            if (pagination.GenreId.HasValue)
+            if (pagination.GenreId != 0)
             {
                 source = source.Where(x => x.Genres.Any(z => z.Id == pagination.GenreId));
             }
-            if (pagination.MaxPrice.HasValue)
+            if (pagination.MaxPrice != 0)
             {
-                source = source.Where(x => x.Price < pagination.MaxPrice.Value || (x.SalePrice < pagination.MaxPrice.Value && x.IsOnSale));
+                source = source.Where(x => x.Price < pagination.MaxPrice || (x.SalePrice < pagination.MaxPrice && x.IsOnSale));
             }
             if (pagination.IsOnSale)
             {

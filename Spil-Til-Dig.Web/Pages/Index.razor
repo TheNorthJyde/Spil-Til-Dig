@@ -1,32 +1,100 @@
 ﻿@page "/"
+@using Spil_Til_Dig.Shared.Models.DTO;
 
-@if (Products != null)
+@if (Products != null && Genres != null)
 {
 
     <div class="container">
         <div class="row">
-            @foreach (var product in Products)
-            {
-                <div class="col-sm-5" style="width: 225px; max-width: 225px">
-                    <div class="GameCard">
-                        <div class="Game_cover">
-                            <img class="img-responsive " src="@product.ImageUrl" >
+
+            <div class="col-md-9">
+                <div class="row">
+                    @foreach (var product in Products)
+                    {
+                        <div class="col-sm-5 GameCard-Size">
+                            <div class="GameCard">
+                                <div class="Game_cover">
+                                    <img class="img-responsive " src="@product.ImageUrl">
+                                </div>
+                                <div class="GameCard-Caption">
+                                    <div class="GameCard-Aside">Køb</div>
+                                    <p class="GameCard-Name">@product.Name</p>
+                                    <small class="GameCard-Price">@(product.IsOnSale? product.SalePrice : product.Price) kr.</small>
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="GameCard-Caption">
-                            <div class="GameCard-Aside">Køb</div>
-                            <p class="GameCard-Name">@product.Name</p>
-                            <small class="GameCard-Price">@(product.IsOnSale? product.SalePrice : product.Price) kr.</small>
-                        </div>
-                    </div>
+                    }
 
                 </div>
-            }
+                <Paginator Length="Products.Paging.TotalCount" PageSize="Products.Paging.PageSize" Page="OnPage" PageLabel="Side:"></Paginator>
+            </div>
 
+            <div class="col-md-3">
+                <div class="card">
+                    <article class="card-group-item">
+                        <header class="card-header panel-heading" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch">
+                            <h6 class="title">Søg </h6>
+                        </header>
+                        <div class="filter-content collapse" id="collapseSearch">
+                            <div class="card-body">
+                                <MatTextField @bind-Value="Products.Paging.Search" PlaceHolder="Søg..."></MatTextField>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="card-group-item">
+                            <header class="card-header panel-heading" data-toggle="collapse" data-target="#collapseGenre" aria-expanded="false" aria-controls="collapseGenre">
+                                <h6 class="title">Genre </h6>
+                            </header>
+                        <div class="filter-content collapse" id="collapseGenre">
+                            <div class="card-body">
+                                <MatRadioGroup  @bind-Value="Products.Paging.GenreId" Items="Genres.Select(x => x.Id)">
+                                    <ItemTemplate>
+                                        <div>
+                                            <MatRadioButton Value="@context" Label="@Genres.FirstOrDefault(x => x.Id == context).Name"></MatRadioButton>
+                                        </div>
+                                    </ItemTemplate>
+                                </MatRadioGroup>
+                            </div>
+                        </div>
+
+                    </article>
+
+
+                    <article class="card-group-item">
+                        <header class="card-header panel-heading" data-toggle="collapse" data-target="#collapsePrice" aria-expanded="false" aria-controls="collapsePrice">
+                            <h6 class="title">Max price</h6>
+                        </header>
+                        <div class="filter-content collapse" id="collapsePrice">
+                            <div class="card-body">
+                                <MatNumericUpDownField DecimalPlaces="2" @bind-Value="Products.Paging.MaxPrice"></MatNumericUpDownField>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="card-group-item">
+                        <header class="card-header panel-heading" data-toggle="collapse" data-target="#collapseSale" aria-expanded="false" aria-controls="collapseSale">
+                            <h6 class="title">Tilbud</h6>
+                        </header>
+                        <div class="filter-content collapse" id="collapseSale">
+                            <div class="card-body">
+                                <MatCheckbox @bind-Value="Products.Paging.IsOnSale"></MatCheckbox>
+                            </div>
+                        </div>
+                    </article>
+                    <MatDivider></MatDivider>
+                    <article class="card-group-item">
+                        <div class="filter-content">
+                            <div class="card-body">
+                                <MatButton @onclick="reloadProducts">anvend</MatButton>
+                                <MatButton @onclick="ResetFilter">reset</MatButton>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
         </div>
-        <Paginator Length="Products.Paging.TotalCount" PageSize="Products.Paging.PageSize" Page="OnPage" PageLabel="Side:"></Paginator>
     </div>
+
 }
 <style>
-    
-
 </style>
