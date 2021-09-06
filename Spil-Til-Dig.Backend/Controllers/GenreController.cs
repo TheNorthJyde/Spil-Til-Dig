@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Spil_Til_Dig.Backend.Attributes;
 using Spil_Til_Dig.Backend.Services;
 using Spil_Til_Dig.Shared.Entities;
+using Spil_Til_Dig.Shared.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,16 +17,17 @@ namespace Spil_Til_Dig.Backend.Controllers
     public class GenreController : ControllerBase
     {
         private readonly IGenreSerivce genreSerivce;
-
-        public GenreController(IGenreSerivce genreSerivce)
+        protected readonly IMapper mapper;
+        public GenreController(IGenreSerivce genreSerivce, IMapper mapper)
         {
             this.genreSerivce = genreSerivce;
+            this.mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetGenre()
         {
-            return Ok(await genreSerivce.GetAllGernres());
+            return Ok(mapper.Map<List<GenreDTO>>(await genreSerivce.GetAllGernres()));
         }
 
         [HttpPost]
