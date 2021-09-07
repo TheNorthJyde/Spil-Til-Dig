@@ -1,0 +1,23 @@
+﻿
+<div>
+    <div class="cart">
+        <MatButton Icon="@MatIconNames.Shopping_cart"> @Products.Count</MatButton>
+        <div class="cartList">
+            <div class="row">
+                @foreach (var product in Products)
+                {
+                    <div class="col-3">
+                        <img style="width: 100%" src="@product.ImageUrl" />
+                    </div>
+                    <div class="col-6">
+                        <p>@product.Name</p>
+                    </div>
+                    <div class="col-3">
+                        <MatIconButton Icon="@MatIconNames.Remove_shopping_cart" OnClick="(() => CartService.RemoveFromCart(product.Id))"></MatIconButton>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>

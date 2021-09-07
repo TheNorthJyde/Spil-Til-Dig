@@ -11,8 +11,13 @@ namespace Spil_Til_Dig.Web.Helpers
     {
         public static IServiceCollection InstallServices(this IServiceCollection services)
         {
+            //scoped
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IGenreService, GenreService>();
+            services.AddScoped<ICartService, CartService>();
+
+            //singleton
+
 
             return services;
         }

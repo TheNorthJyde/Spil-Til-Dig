@@ -17,7 +17,7 @@
                                     <img class="img-responsive " src="@product.ImageUrl">
                                 </div>
                                 <div class="GameCard-Caption">
-                                    <div class="GameCard-Aside">Køb</div>
+                                    <a class="GameCard-Aside" @onclick="(() => CartService.AddToCart(product))">Køb</a>
                                     <p class="GameCard-Name">@product.Name</p>
                                     <small class="GameCard-Price">@(product.IsOnSale? product.SalePrice : product.Price) kr.</small>
                                 </div>

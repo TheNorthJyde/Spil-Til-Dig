@@ -17,6 +17,8 @@ namespace Spil_Til_Dig.Web.Pages
         IProductService ProductService { get; set; }
         [Inject]
         IGenreService GenreService { get; set; }
+        [Inject]
+        ICartService CartService { get; set; }
 
         [Inject]
         NavigationManager navigation { get; set; }
@@ -53,5 +55,6 @@ namespace Spil_Til_Dig.Web.Pages
             Products.Paging.IsOnSale = false;
             Products.Paging.GenreId = 0;
         }
+
     }
 }
