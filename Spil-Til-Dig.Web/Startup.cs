@@ -19,6 +19,7 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using System.Net.Http;
 using Spil_Til_Dig.Web.Helpers;
+using Blazored.LocalStorage;
 
 namespace Spil_Til_Dig.Web
 {
@@ -55,7 +56,7 @@ namespace Spil_Til_Dig.Web
             services.AddRazorPages();
             services.AddServerSideBlazor()
                 .AddMicrosoftIdentityConsentHandler();
-
+            services.AddBlazoredLocalStorage();
             services.InstallServices();
         }
 
