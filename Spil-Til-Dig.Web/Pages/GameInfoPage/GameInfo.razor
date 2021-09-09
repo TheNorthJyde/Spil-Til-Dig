@@ -1,0 +1,128 @@
+﻿@page "/game/{GameId:long}"
+
+
+
+@if (Product != null)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-9">
+                <div class="row gameInfo">
+                    <div class="col-12">
+                        <h1 class="gameInfoName">@Product.Name</h1>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <img style="width: 100%; max-width: 350px" src="@Product.ImageUrl" />
+                    </div>
+                    <div class="col-12 col-lg-8">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h3>Om spillet</h3>
+                                    </div>
+                                    <div class="col-12">
+                                        <p>@Product.Summary</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12 col-lg-3">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="gameInfo-Card">
+                            <div class="gameInfo-Card-Header">
+                                <div class="row">
+                                    <div class="col-10 col-sm-6 col-lg-12">
+                                        <h2>Køb</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gameInfo-Card-Body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="gameInfo-Card-Price">
+                                            <ul>
+                                                <li>
+                                                    <strong>Normal pris</strong>
+                                                    <span class="float-right">
+                                                        <strong>@Product.Price kr.</strong>
+                                                    </span>
+                                                </li>
+                                                @if (Product.IsOnSale)
+                                                {
+                                                    <li>
+                                                        Du spare
+                                                        <span class="float-right">
+                                                            -@(Product.Price - Product.SalePrice) kr.
+                                                        </span>
+                                                    </li>
+                                                    <li>
+                                                        <strong>Tilbuds pris</strong>
+                                                        <span class="float-right">
+                                                            <strong>@Product.SalePrice kr.</strong>
+                                                        </span>
+                                                    </li>
+                                                }
+                                            <li>
+                                                Mængde
+                                                <span class="float-right">
+                                                    @Product.KeyCount
+                                                </span>
+                                            </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div style="justify-content: center;">
+                                            <MatButton Icon="@MatIconNames.Add_shopping_cart" @onclick="(() => CartService.AddToCart(Product))">Læg i kurv</MatButton>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="gameInfoBox">
+                            <h3>Information</h3>
+                            <div class="row">
+                                <div class="col-4 gameInfoLeftCol">
+                                    <strong>Udgiver</strong>
+                                </div>
+                                <div class="col-8 gameInfoRighttCol">
+                                    @Product.Publicher
+                                </div>
+                                <div class="col-4 gameInfoLeftCol">
+                                    <strong>Udvikler</strong>
+                                </div>
+                                <div class="col-8 gameInfoRighttCol">
+                                    @Product.Developer
+                                </div>
+                                <div class="col-4 gameInfoLeftCol">
+                                    <strong>Genre</strong>
+                                </div>
+                                <div class="col-8 gameInfoRighttCol">
+                                    @string.Join(", ", Product.Genres.Select(x => x.Name))
+                                </div>
+                                <div class="col-4 gameInfoLeftCol">
+                                    <strong>Udgivelse</strong>
+                                </div>
+                                <div class="col-8 gameInfoRighttCol">
+                                    @Product.ReleaseDate.ToString("dd-MM-yyyy")
+                                </div>
+
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}

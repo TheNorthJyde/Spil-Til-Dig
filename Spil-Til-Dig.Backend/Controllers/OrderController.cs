@@ -55,7 +55,7 @@ namespace Spil_Til_Dig.Backend.Controllers
         public async Task<IActionResult> CaptureOrder(string orderNumber)
         {
             var result = await payPalService.CaptureOrder(orderNumber);
-            return Ok(mapper.Map<List<ProductKeyDTO>>(result.Keys));
+            return Ok(result);
         }
 
         [HttpDelete("DeleteAllUserData")]

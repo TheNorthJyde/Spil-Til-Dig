@@ -11,5 +11,6 @@ namespace Spil_Til_Dig.Web.Services
     public interface IProductService
     {
         Task<PagedList<ProductDTO>> GetProducts(Pagination pagination);
+        Task<ProductDTO> GetProduct(long id);
     }
 }

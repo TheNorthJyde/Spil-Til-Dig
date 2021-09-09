@@ -11,6 +11,7 @@ namespace Spil_Til_Dig.Web.Services
         Task AddToCart(ProductDTO product);
         Task RemoveFromCart(long id);
         Task<List<ProductDTO>> GetCart();
+        Task EmptyCart();
         event Action OnChange;
 
     }

@@ -19,6 +19,19 @@ namespace Spil_Til_Dig.Web.Services
             this.client = client;
         }
 
+        public async Task<ProductDTO> GetProduct(long id)
+        {
+            try
+            {
+                return await client.GetFromJsonAsync<ProductDTO>("product/" + id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
+
         public async Task<PagedList<ProductDTO>> GetProducts(Pagination pagination)
         {
             try

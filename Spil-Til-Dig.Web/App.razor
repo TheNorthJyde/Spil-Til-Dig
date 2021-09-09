@@ -1,3 +1,5 @@
+@inject TokenProvider provider
+
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(Program).Assembly" PreferExactMatches="@true">
         <Found Context="routeData">
@@ -10,3 +12,15 @@
         </NotFound>
     </Router>
 </CascadingAuthenticationState>
+
+@code {
+    [Parameter]
+    public InitialApplicationState InitialState { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        provider.AccessToken = InitialState.AccessToken;
+        provider.RefreshToken = InitialState.RefreshToken;
+        return base.OnInitializedAsync();
+    }
+}
