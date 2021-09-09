@@ -1,0 +1,116 @@
+﻿@page "/checkout"
+@attribute [Authorize]
+
+<div class="container">
+    @if (OrderIsComplete)
+    {
+    <div class="row checkout">
+        <div class="col-12">
+            <h2>Order udført</h2>
+            <p>Order nummer: @paypalCapure.id</p>
+        </div>
+        @foreach (var key in productKeys)
+        {
+            <div class="col-12" style="margin-bottom: 10px;">
+                <div class="row">
+                    <div class="col-2">
+                        <img style="width: 100%" src="@key.Product.ImageUrl" />
+                    </div>
+                    <div class="col-10">
+                        <div class="row">
+                            <div class="col-12">
+                                <p>@key.Product.Name</p>
+                            </div>
+                            <div class="col-12">
+                                <p>@key.Id</p> 
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-12 col-lg-9 checkout">
+                <div class="row">
+                    <div class="col-12">
+                        <h2>Din kurv:</h2>
+                    </div>
+                    @foreach (var product in Products)
+                    {
+                        <div class="col-12" style="margin-bottom: 10px;">
+                            <div class="row">
+                                <div class="col-2">
+                                    <img style="width: 100%" src="@product.ImageUrl" />
+                                </div>
+                                <div class="col-6">
+                                    <p>@product.Name</p>
+                                </div>
+                                <div class="col-2">
+                                    <p>@(product.IsOnSale? product.SalePrice : product.Price)</p>
+                                </div>
+                                <div class="col-2">
+                                    <MatIconButton Icon="@MatIconNames.Remove_shopping_cart" OnClick="(() => CartService.RemoveFromCart(product.Id))"></MatIconButton>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-12 col-lg-3" style="margin-bottom: 15px">
+                <div class="cartSummary">
+                    <div class="cartSummaryHeader">
+                        <div class="row">
+                            <div class="col-10 col-sm-6 col-lg-12">
+                                <h2>Kurv opsumering</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cartSummaryBody">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="cartSummaryItems cartSummaryPrice">
+                                    <ul>
+                                        <li class="cartFullPrice">
+                                            <strong>Fuld pris</strong>
+                                            <span class="float-right">
+                                                <strong>@FullPrice kr.</strong>
+                                            </span>
+                                        </li>
+                                        <li class="cartFullDiscont">
+                                            Dit tilbud
+                                            <span class="float-right">
+                                                -@FullDiscount kr.
+                                            </span>
+                                        </li>
+                                        <li class="cartTotalPrice">
+                                            <strong>Total pris</strong>
+                                            <span class="float-right">
+                                                <strong>@TotalPrice kr.</strong>
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cartSummaryFooter">
+                        <div class="row">
+                            <div class="col-12">
+                                <div id="paypal-button-container"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    }
+</div>
+
+

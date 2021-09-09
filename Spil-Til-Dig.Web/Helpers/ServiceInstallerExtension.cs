@@ -15,7 +15,7 @@ namespace Spil_Til_Dig.Web.Helpers
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IGenreService, GenreService>();
             services.AddScoped<ICartService, CartService>();
-
+            services.AddScoped<IOrderService, OrderService>();
             //singleton
 
 

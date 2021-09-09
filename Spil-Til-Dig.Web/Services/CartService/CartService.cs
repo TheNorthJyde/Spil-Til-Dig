@@ -46,5 +46,10 @@ namespace Spil_Til_Dig.Web.Services
             }
             return products;
         }
+
+        public async Task EmptyCart()
+        {
+            await localStorage.SetItemAsync(cascheName, new List<ProductDTO>());
+        }
     }
 }

@@ -20,6 +20,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Net.Http;
 using Spil_Til_Dig.Web.Helpers;
 using Blazored.LocalStorage;
+using Spil_Til_Dig.Web.Security;
 
 namespace Spil_Til_Dig.Web
 {
@@ -36,12 +37,20 @@ namespace Spil_Til_Dig.Web
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            //  services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
+            //.AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAd"))
+            //  .EnableTokenAcquisitionToCallDownstreamApi(new string[] { })
+            //  .AddInMemoryTokenCaches();
+
+
             services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
-                .AddMicrosoftIdentityWebApp(options => 
+                .AddMicrosoftIdentityWebApp(options =>
                 {
                     Configuration.Bind("AzureAD", options);
-                    //options.SaveTokens = true;
-                    //options.Scope.Add("offline_access");
+                    options.ResponseType = OpenIdConnectResponseType.Code;
+                    options.SaveTokens = true;
+                    options.Scope.Add("offline_access");
+                    //options.SignedOutCallbackPath = "/";
                 });
 
             services.AddHttpClient("SpilTilDig.API", client =>
@@ -49,7 +58,7 @@ namespace Spil_Til_Dig.Web
 
             services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
                 .CreateClient("SpilTilDig.API"));
-
+            services.AddScoped<TokenProvider>();
             services.AddControllersWithViews()
                 .AddMicrosoftIdentityUI();
 

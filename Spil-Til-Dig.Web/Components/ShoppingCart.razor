@@ -1,7 +1,7 @@
 ﻿
 <div>
     <div class="cart">
-        <MatButton Icon="@MatIconNames.Shopping_cart"> @Products.Count</MatButton>
+        <MatButtonLink Href="/checkout" Icon="@MatIconNames.Shopping_cart"> @Products.Count</MatButtonLink>
         <div class="cartList">
             <div class="row">
                 @foreach (var product in Products)

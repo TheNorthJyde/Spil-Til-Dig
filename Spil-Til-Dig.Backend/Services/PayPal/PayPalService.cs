@@ -13,6 +13,8 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Spil_Til_Dig.Shared.Models.DTO;
+using AutoMapper;
 
 namespace Spil_Til_Dig.Backend.Services
 {
@@ -22,13 +24,15 @@ namespace Spil_Til_Dig.Backend.Services
         private readonly IOptions<PayPalOptions> options;
         private readonly IOrderRepo orderRepo;
         private readonly IKeyRepo keyRepo;
+        protected readonly IMapper mapper;
 
-        public PayPalService(HttpClient client, IOptions<PayPalOptions> options, IOrderRepo orderRepo, IKeyRepo keyRepo)
+        public PayPalService(HttpClient client, IOptions<PayPalOptions> options, IOrderRepo orderRepo, IKeyRepo keyRepo, IMapper mapper)
         {
             this.client = client;
             this.options = options;
             this.orderRepo = orderRepo;
             this.keyRepo = keyRepo;
+            this.mapper = mapper;
         }
 
         private async Task SetToken()
@@ -90,17 +94,18 @@ namespace Spil_Til_Dig.Backend.Services
             return created;
         }
 
-        public async Task<Order> CaptureOrder(string orderNumber)
+        public async Task<CaptureCompletedDTO> CaptureOrder(string orderNumber)
         {
             await SetToken();
             var response = await client.PostAsJsonAsync<Order>($"https://api.sandbox.paypal.com/v2/checkout/orders/{orderNumber}/capture", null);
             if (response.IsSuccessStatusCode)
             {
+                var capture = await response.Content.ReadFromJsonAsync<PaypalCapureComplete>();
                 var order = await orderRepo.GetAsync(orderNumber);
                 order.IsPaid = true;
                 orderRepo.Update(order);
                 await orderRepo.SaveAsync();
-                return order;
+                return new CaptureCompletedDTO { CompleteCaputre = capture, Keys = mapper.Map<List<ProductKeyDTO>>(order.Keys) };
             }
             return null;
         }

@@ -1,5 +1,4 @@
 ﻿@page "/"
-@using Spil_Til_Dig.Shared.Models.DTO;
 
 @if (Products != null && Genres != null)
 {
@@ -16,8 +15,13 @@
                                 <div class="Game_cover">
                                     <img class="img-responsive " src="@product.ImageUrl">
                                 </div>
+                                <a class="gameCard-Overlay"  href="/game/@product.Id">
+                                    Læs
+                                    <br />
+                                    Mere
+                                </a>
                                 <div class="GameCard-Caption">
-                                    <a class="GameCard-Aside" @onclick="(() => CartService.AddToCart(product))">Køb</a>
+                                    <MatIconButton Icon="@MatIconNames.Add_shopping_cart" class="GameCard-Aside" @onclick="(() => CartService.AddToCart(product))"></MatIconButton>
                                     <p class="GameCard-Name">@product.Name</p>
                                     <small class="GameCard-Price">@(product.IsOnSale? product.SalePrice : product.Price) kr.</small>
                                 </div>
