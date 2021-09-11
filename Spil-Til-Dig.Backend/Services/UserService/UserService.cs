@@ -42,10 +42,6 @@ namespace Spil_Til_Dig.Backend.Services
             pagination.PreparePaging();
             var source = orderRepo.GetAll();
             source = source.Where(x => x.UserId == userId);
-            if (!string.IsNullOrWhiteSpace(pagination.Search))
-            {
-                source = source.Where(x => x.Keys.Any(z => z.Product.Name.Contains(pagination.Search)));
-            }
 
             return await PagedList<Order>.CreateAsync(source, pagination);
         }

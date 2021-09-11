@@ -1,9 +1,16 @@
 ﻿<AuthorizeView>
     <Authorized>
-         @context.User.Identity.Name! 
-        <a href="MicrosoftIdentity/Account/SignOut">Log out</a>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="bi bi-person-circle"></i> @context.User.Identity.Name
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="/orderhistory">Order Historik</a>
+                <a class="dropdown-item" href="MicrosoftIdentity/Account/SignOut">Log out</a>
+            </div>
+        </div>        
     </Authorized>
     <NotAuthorized>
-        <a href="MicrosoftIdentity/Account/SignIn">Log in</a>
+        <a class="nav-link" href="MicrosoftIdentity/Account/SignIn">Log in</a>
     </NotAuthorized>
 </AuthorizeView>
