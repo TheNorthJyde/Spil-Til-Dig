@@ -1,0 +1,15 @@
+﻿@import "../wwwroot/lib/bootstrap/scss/functions";
+@import "../wwwroot/lib/bootstrap/scss/variables";
+@import "../wwwroot/lib/bootstrap/scss/mixins";
+
+@include media-breakpoint-up(lg) {
+    .nav-expand{
+        display: none !important;
+    }
+}
+
+@include media-breakpoint-down(lg) {
+    .nav-coolapsed {
+        display: none !important;
+    }
+}

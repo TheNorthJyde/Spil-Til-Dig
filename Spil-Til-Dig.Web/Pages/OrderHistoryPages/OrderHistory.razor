@@ -1,0 +1,68 @@
+﻿@page "/orderhistory"
+@attribute [Authorize]
+
+@if (Orders != null)
+{
+    <div class="container checkout">
+        <div class="row">
+            @foreach (var order in Orders)
+            {
+                <div class="col-12" style="margin-bottom: 10px;">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row ">
+                                
+                                <div class="col-12 cursor-click" data-bs-toggle="collapse" data-bs-target="#collapse-@order.Id" aria-expanded="false" aria-controls="collapse-@order.Id">
+                                    <div class="row">
+                                        <div class="col-12 col-lg-5">
+                                            <p>Order nummer: @order.Id</p>
+                                        </div>
+                                        <div class="col-12 col-lg-3">
+                                            <p>Antal spil: @order.Keys.Count</p>
+                                        </div>
+                                        <div class="col-12 col-lg-3">
+                                            <p>Dato: @order.CreatedAt.ToString("dd-MM-yyyy")</p>
+                                        </div>
+                                        <div class="col panel-heading" data-bs-toggle="collapse" data-bs-target="#collapse-@order.Id" aria-expanded="false" aria-controls="collapse-@order.Id">
+                                            <span></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 collapse" id="collapse-@order.Id">
+                                    <div class="row">
+                                        @foreach (var key in order.Keys)
+                                        {
+                                            <div class="col-12" style="margin-bottom: 10px;">
+                                                <div class="row">
+                                                    <div class="col-2">
+                                                        <img style="width: 100%" src="@key.Product.ImageUrl" />
+                                                    </div>
+                                                    <div class="col-10">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <p>@key.Product.Name</p>
+                                                            </div>
+                                                            <div class="col-12">
+                                                                <p>@key.Id</p>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <Paginator  Length="Orders.Paging.TotalCount" PageSize="Orders.Paging.PageSize" Page="OnPage" PageLabel="Side:"></Paginator>
+    </div>
+
+
+}

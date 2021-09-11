@@ -1,7 +1,10 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
-
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css");
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+body {
+    background-color: #545C6B;
 }
 
 a, .btn-link {
@@ -335,6 +338,10 @@ img {
     z-index: 1;
 }*/
 
+.cursor-click {
+    cursor: pointer;
+}
+
 @media (min-width: 1200px) {
     .cartSummaryBody {
         display: block !important;
@@ -349,3 +356,14 @@ img {
         padding: 0 9px 15px;
     }
 }
+
+.mat-paginator {
+    background-color: inherit !important; 
+}
+
+.mat-paginator-container {
+    justify-content: center !important;
+    -ms-flex-pack: center !important;
+}
+
+

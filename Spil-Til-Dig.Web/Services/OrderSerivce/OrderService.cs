@@ -1,6 +1,8 @@
 ﻿using Microsoft.Identity.Web;
+using Spil_Til_Dig.Shared.Models;
 using Spil_Til_Dig.Shared.Models.DTO;
 using Spil_Til_Dig.Shared.Models.PayPal;
+using Spil_Til_Dig.Shared.Wrappers;
 using Spil_Til_Dig.Web.Security;
 using System;
 using System.Collections.Generic;
@@ -51,5 +53,18 @@ namespace Spil_Til_Dig.Web.Services
             }
         }
 
+        public async Task<PagedList<OrderDTO>> GetOrders(Pagination pagination)
+        {
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", tokenProvider.AccessToken);
+            try
+            {
+                return await client.GetFromJsonAsync<PagedList<OrderDTO>>("order" + pagination.AsQuery());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
     }
 }
