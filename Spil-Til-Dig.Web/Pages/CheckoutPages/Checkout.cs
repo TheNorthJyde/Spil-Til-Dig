@@ -21,7 +21,6 @@ namespace Spil_Til_Dig.Web.Pages.CheckoutPages
         [Inject]
         IJSRuntime jS { get; set; }
         
-        string OrderId;
         bool OrderIsComplete = false;
         List<ProductKeyDTO> productKeys = new List<ProductKeyDTO>();
         PaypalCapureComplete paypalCapure;

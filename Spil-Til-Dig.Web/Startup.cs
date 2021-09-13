@@ -37,12 +37,6 @@ namespace Spil_Til_Dig.Web
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            //  services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
-            //.AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAd"))
-            //  .EnableTokenAcquisitionToCallDownstreamApi(new string[] { })
-            //  .AddInMemoryTokenCaches();
-
-
             services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApp(options =>
                 {
