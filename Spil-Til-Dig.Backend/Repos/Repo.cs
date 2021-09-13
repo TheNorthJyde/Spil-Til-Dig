@@ -105,7 +105,7 @@ namespace Spil_Til_Dig.Backend.Repos
 
         public Entity Find(Expression<Func<Entity, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return  _context.Set<Entity>().FirstOrDefault(predicate);
         }
 
         public async Task<Entity> FindAsync(Expression<Func<Entity, bool>> predicate)

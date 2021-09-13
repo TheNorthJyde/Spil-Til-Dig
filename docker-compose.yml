@@ -3,6 +3,7 @@ version: '3.4'
 networks:
   spilnet:
     driver: bridge
+    
 services:
   spil-til-dig.backend:
     image: ${DOCKER_REGISTRY-}spiltildigbackend
