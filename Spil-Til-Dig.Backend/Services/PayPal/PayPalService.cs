@@ -37,7 +37,7 @@ namespace Spil_Til_Dig.Backend.Services
 
         private async Task SetToken()
         {
-            using (var request = new HttpRequestMessage(new HttpMethod("POST"), "https://api-m.sandbox.paypal.com/v1/oauth2/token"))
+            using (var request = new HttpRequestMessage(new HttpMethod("POST"), $"{options.Value.URL}/v1/oauth2/token"))
             {
                 request.Headers.TryAddWithoutValidation("Accept", "application/json");
                 request.Headers.TryAddWithoutValidation("Accept-Language", "en_US");
@@ -82,7 +82,7 @@ namespace Spil_Til_Dig.Backend.Services
             amount.breakdown.item_total = new Money(){ currency_code = "DKK", value = amount.value };
             purchaseUnit.amount = amount;
             payPalOrder.purchase_units.Add(purchaseUnit);
-            var respone = await client.PostAsJsonAsync("https://api-m.sandbox.paypal.com/v2/checkout/orders", payPalOrder);
+            var respone = await client.PostAsJsonAsync($"{options.Value.URL}/v2/checkout/orders", payPalOrder);
             var created = await respone.Content.ReadFromJsonAsync<PayPalOrderCreated>();
             order.Id = created.id;
             order.IsPaid = false;
@@ -97,7 +97,7 @@ namespace Spil_Til_Dig.Backend.Services
         public async Task<CaptureCompletedDTO> CaptureOrder(string orderNumber)
         {
             await SetToken();
-            var response = await client.PostAsJsonAsync<Order>($"https://api.sandbox.paypal.com/v2/checkout/orders/{orderNumber}/capture", null);
+            var response = await client.PostAsJsonAsync<Order>($"{options.Value.URL}/v2/checkout/orders/{orderNumber}/capture", null);
             if (response.IsSuccessStatusCode)
             {
                 var capture = await response.Content.ReadFromJsonAsync<PaypalCapureComplete>();

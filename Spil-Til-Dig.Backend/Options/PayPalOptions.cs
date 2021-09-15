@@ -9,5 +9,6 @@ namespace Spil_Til_Dig.Backend.Options
     {
         public string ClientId { get; set; }
         public string Secret { get; set; }
+        public string URL { get; set; }
     }
 }

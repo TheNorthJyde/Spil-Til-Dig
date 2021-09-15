@@ -53,7 +53,12 @@ namespace Spil_Til_Dig.Backend.Services.Seed
                     }
                     //product.Genres.AddRange(game.Genres.Values.Select(x => new e.Genre { Id = x.Id.Value, Name = x.Name }));
                     product.ImageUrl = "https:" + ImageHelper.GetImageUrl(game.Cover.Value.ImageId, size: ImageSize.CoverBig);
-                    product.Price = rng.Next(15, 400);
+                    product.Price = rng.Next(40, 400);
+                    if (rng.Next(1,5) == 2)
+                    {
+                        product.IsOnSale = true;
+                        product.SalePrice = rng.Next(20, ((int)product.Price - 1));
+                    }
                     product.ReleaseDate = game.FirstReleaseDate.Value.DateTime;
                     product.Summary = game.Summary;
                     var ProduktKeyAmount = rng.Next(5, 50);
